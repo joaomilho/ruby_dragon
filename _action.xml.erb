@@ -1,0 +1,7 @@
+  <object type="ACTION" id="z<%= @action_id %>">
+    <attribute name="text" type="string"><%= @keys.join(' ') %></attribute>
+    <attribute name="oslanguage" type="string">en_GB</attribute>
+    <attribute name="isuser" type="bool">1</attribute>
+    <relationship name="command" type="1/1" destination="COMMAND" idrefs="z<%= @command_id %>"></relationship>
+    <relationship name="currentcommand" type="1/1" destination="COMMAND"></relationship>
+  </object>

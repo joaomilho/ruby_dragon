@@ -1,0 +1,23 @@
+  <object type="COMMAND" id="z<%= @command_id %>">
+    <attribute name="version" type="int32">1</attribute>
+    <attribute name="vendor" type="string">RubyDragon</attribute>
+    <attribute name="type" type="string"><%= @@type %></attribute>
+    <attribute name="spokenlanguage" type="string">en_US</attribute>
+    <attribute name="oslanguage" type="string">en_GB</attribute>
+    <attribute name="isspelling" type="bool">0</attribute>
+    <attribute name="issleep" type="bool">0</attribute>
+    <attribute name="isdictation" type="bool">0</attribute>
+    <attribute name="iscorrection" type="bool">0</attribute>
+    <attribute name="iscommand" type="bool">1</attribute>
+    <attribute name="engineid" type="int32">-1</attribute>
+    <attribute name="display" type="bool">1</attribute>
+    <attribute name="commandid" type="int32"><%= random_command_id %></attribute>
+    <attribute name="appversion" type="int32"><%= app.version %></attribute>
+    <attribute name="appbundle" type="string"><%= app.name %></attribute>
+    <attribute name="active" type="bool">1</attribute>
+    <relationship name="currentaction" type="1/1" destination="ACTION"></relationship>
+    <relationship name="currenttrigger" type="1/1" destination="TRIGGER"></relationship>
+    <relationship name="location" type="1/1" destination="LOCATION"></relationship>
+    <relationship name="action" type="0/0" destination="ACTION" idrefs="z<%= @action_id %>"></relationship>
+    <relationship name="trigger" type="1/0" destination="TRIGGER" idrefs="z<%= @trigger_id %>"></relationship>
+  </object>
