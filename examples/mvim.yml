@@ -2,45 +2,117 @@ app:
   name: org.vim.MacVim
   version: 1
 keystrokes:
-  delete: [d]
-  "delete line": [d, d]
-  open: [":", "e", " "]
-  save: [":", "w", " "]
-  quit: [":", "q", " "]
-  replace: [":", "%", "s", "/", "/", "/", "g"]
-  top: [g, g]
-  bottom: [G]
-  execute: [":", "!"]
-  insert: [i]
-  "new line insert": [o]
-  "delete until end": [D]
-  indent: ["="]
-  begin: ["^"]
-  end: ["$"]
-  undo: [u]
-  next: [n]
-  repeat: ["."]
+  # Things to be done in insert mode
+  cancel: [Escape]
+  normal: [Escape]
+  "normal mode": [Escape]
+  quotes: ["\""]
+  quote: ["\""]
+  brackets: ["["]
+  backspace: [Delete]
+  space: [Space]
+  colon: [":"]
+  "two colons": [":", ":"]
+
+  # Motion
+  left: [Escape, "h"]
+  right: [Escape, "l"]
+  up: [Escape, "k"]
+  down: [Escape, "j"]
+  top: [Escape, g, g]
+  bottom: [Escape, Shift-g]
+
+  # things to be done in normal mode
+  "remove word": [Escape, d, w]
+  "delete line": [Escape, d, d]
+  open: [Escape, ":", "e", " "]
+  save: [Escape, ":", "w", Return]
+  quit: [Escape, ":", "q", Return]
+  replace: [Escape, ":", "%", "s", "/", "/", "/", "g"]
+
+  search: [Escape, "/"]
+
+
+  execute: [Escape, ":", "!"]
+  insert: [Escape, i]
+  "insert in the beggining": [Escape, Shift-i]
+  "new line insert": [Escape, o]
+  "delete until end": [Escape, Shift-d]
+  indent: [Escape, "="]
+  begin: [Escape, "^"]
+  "begin of line": [Escape, "0"]
+  end: [Escape, "$"]
+  "end of line": [Escape, "g", "_"]
+  undo: [Escape, u]
+  visual: [Escape, v]
+  uppercase: [Escape, Shift-u]
+  next: [Escape, n]
+  repeat: [Escape, "."]
+  yank: [Escape, y]
+  "yank line": [Escape, y, y]
+  dup: [Escape, y, y, p]
+  vip: [Escape, v, i, p]
+  word: [Escape, w]
+  "back word": [Escape, b]
+
+  #Case
+  "uppercase word": [Escape, v, w, Shift-u]
+  "uppercase last word": [Escape, b, v, w, Shift-u]
 
   # NerdTree stuff
-  tree: [",", "p"]
-  "open tree": [",", "p"]
-  "close tree": [",", "p"]
+  tree: [Escape, ",", "p"]
+  "open tree": [Escape, ",", "p"]
+  "close tree": [Escape, ",", "p"]
   down: [DownArrow]
   up: [UpArrow]
   modify: [m]
-  "add file": [m, a]
-  "move file": [m, m]
+  add: [m, a]
+  move: [m, m]
   "delete file": [m, d]
-  "reveal file": [m, r]
-  "duplicate file": [m, c]
+  remove: [m, d]
+  reveal: [m, r]
+  duplicate: [m, c]
   "open file": [Return]
   "enter": [Return]
   "split file": [s]
+  split: [s]
   yes: [y]
 
 texts:
   define: "def  "
   each: ".each  "
   describe: "desc "
+scripts:
+  "command mode": |
+    set _dictateApp to (name of current application)
+      tell application _dictateApp
+      --set microphone to command operation
+      set «class mIcR» to «constant DpmdDMcm»
+    end tell
+  "say /!Something!/": |
+    on srhandler(vars)
+      set dictatedText to (varSomething of vars)
+      say dictatedText
+      say "end"
+    end srhandler
+  "constant /!Something!/": |
+    on srhandler(vars)
+      set dictatedText to (varSomething of vars)
+      execute command "insert" of group "MacVim"
+      set upperCaseString to ""
+      repeat with i in dictatedText
+        if (ASCII number i) = 32 then
+          set char to "_"
+        else
+          set char to (ASCII character ((ASCII number i) - 32))
+        end if
+        set upperCaseString to upperCaseString & char
+      end repeat
+      keystroke upperCaseString & " = "
+    end srhandler
+  "replace character": |
+    execute command "normal" of group "MacVim"
+    keystroke "r"
+    execute command "Spelling mode"
 
 

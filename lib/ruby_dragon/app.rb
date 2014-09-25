@@ -11,8 +11,11 @@ module RubyDragon
         (hash["keystrokes"] || []).each do |word, keys|
           app << Keystroke.new(word, keys)
         end
-        (hash["texts"] || []).each do |word, keys|
-          app << Text.new(word, keys)
+        (hash["texts"] || []).each do |word, text|
+          app << Text.new(word, text)
+        end
+        (hash["scripts"] || []).each do |word, script|
+          app << AppleScript.new(word, script)
         end
       end
     end
