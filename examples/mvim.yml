@@ -1,0 +1,46 @@
+app:
+  name: org.vim.MacVim
+  version: 1
+keystrokes:
+  delete: [d]
+  "delete line": [d, d]
+  open: [":", "e", " "]
+  save: [":", "w", " "]
+  quit: [":", "q", " "]
+  replace: [":", "%", "s", "/", "/", "/", "g"]
+  top: [g, g]
+  bottom: [G]
+  execute: [":", "!"]
+  insert: [i]
+  "new line insert": [o]
+  "delete until end": [D]
+  indent: ["="]
+  begin: ["^"]
+  end: ["$"]
+  undo: [u]
+  next: [n]
+  repeat: ["."]
+
+  # NerdTree stuff
+  tree: [",", "p"]
+  "open tree": [",", "p"]
+  "close tree": [",", "p"]
+  down: [DownArrow]
+  up: [UpArrow]
+  modify: [m]
+  "add file": [m, a]
+  "move file": [m, m]
+  "delete file": [m, d]
+  "reveal file": [m, r]
+  "duplicate file": [m, c]
+  "open file": [Return]
+  "enter": [Return]
+  "split file": [s]
+  yes: [y]
+
+texts:
+  define: "def  "
+  each: ".each  "
+  describe: "desc "
+
+
