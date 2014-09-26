@@ -17,14 +17,15 @@ keystrokes:
   # Motion
   left: [Escape, "h"]
   right: [Escape, "l"]
-  up: [Escape, "k"]
-  down: [Escape, "j"]
+  "move up": [Escape, "k"]
+  "move down": [Escape, "j"]
   top: [Escape, g, g]
   bottom: [Escape, Shift-g]
 
   # things to be done in normal mode
   "remove word": [Escape, d, w]
   "delete line": [Escape, d, d]
+  "delete until end": [Escape, Shift-d]
   open: [Escape, ":", "e", " "]
   save: [Escape, ":", "w", Return]
   quit: [Escape, ":", "q", Return]
@@ -32,12 +33,12 @@ keystrokes:
 
   search: [Escape, "/"]
 
-
+  capitalize: [Escape, g, c, w]
   execute: [Escape, ":", "!"]
   insert: [Escape, i]
   "insert in the beggining": [Escape, Shift-i]
   "new line insert": [Escape, o]
-  "delete until end": [Escape, Shift-d]
+  "new line": [Escape, o, Escape]
   indent: [Escape, "="]
   begin: [Escape, "^"]
   "begin of line": [Escape, "0"]
@@ -45,13 +46,13 @@ keystrokes:
   "end of line": [Escape, "g", "_"]
   undo: [Escape, u]
   visual: [Escape, v]
-  uppercase: [Escape, Shift-u]
+  uppercase: [Escape, v, Shift-u]
   next: [Escape, n]
   repeat: [Escape, "."]
   yank: [Escape, y]
   "yank line": [Escape, y, y]
   dup: [Escape, y, y, p]
-  vip: [Escape, v, i, p]
+  "select all surroundings": [Escape, v, i, p]
   word: [Escape, w]
   "back word": [Escape, b]
 
@@ -78,41 +79,59 @@ keystrokes:
   split: [s]
   yes: [y]
 
+  #macros
+  define: ["Escape", "d", "e", "s"] 
+
 texts:
-  define: "def  "
-  each: ".each  "
   describe: "desc "
 scripts:
-  "command mode": |
-    set _dictateApp to (name of current application)
-      tell application _dictateApp
-      --set microphone to command operation
-      set «class mIcR» to «constant DpmdDMcm»
-    end tell
-  "say /!Something!/": |
-    on srhandler(vars)
-      set dictatedText to (varSomething of vars)
-      say dictatedText
-      say "end"
-    end srhandler
   "constant /!Something!/": |
     on srhandler(vars)
+      set scriptPath to "Macintosh HD:Users:jm:p:dragon-custom-commands:_string.scpt"
+      set _string to load script alias scriptPath
       set dictatedText to (varSomething of vars)
-      execute command "insert" of group "MacVim"
-      set upperCaseString to ""
-      repeat with i in dictatedText
-        if (ASCII number i) = 32 then
-          set char to "_"
-        else
-          set char to (ASCII character ((ASCII number i) - 32))
-        end if
-        set upperCaseString to upperCaseString & char
-      end repeat
-      keystroke upperCaseString & " = "
+      set fixedText to _string's replaceString(dictatedText, " ", "_")
+      execute command "insert"
+      keystroke fixedText using shift down
+      keystroke " = "
+    end srhandler
+  "variable /!Something!/": |
+    on srhandler(vars)
+      set scriptPath to "Macintosh HD:Users:jm:p:dragon-custom-commands:_string.scpt"
+      set _string to load script alias scriptPath
+      set dictatedText to (varSomething of vars)
+      set fixedText to _string's replaceString(dictatedText, " ", "_")
+      set fixedText to _string's lowerString(fixedText)
+      execute command "insert"
+      keystroke fixedText
+      keystroke " = "
+    end srhandler
+  "variable /!Something!/ equals": |
+    on srhandler(vars)
+      set scriptPath to "Macintosh HD:Users:jm:p:dragon-custom-commands:_string.scpt"
+      set _string to load script alias scriptPath
+      set dictatedText to (varSomething of vars)
+      set fixedText to _string's replaceString(dictatedText, " ", "_")
+      set fixedText to _string's lowerString(fixedText)
+      execute command "insert"
+      keystroke fixedText
+      keystroke " = "
+    end srhandler
+  "instance variable /!Something!/": |
+    on srhandler(vars)
+      set scriptPath to "Macintosh HD:Users:jm:p:dragon-custom-commands:_string.scpt"
+      set _string to load script alias scriptPath
+      set dictatedText to (varSomething of vars)
+      set fixedText to _string's replaceString(dictatedText, " ", "_")
+      set fixedText to _string's lowerString(fixedText)
+      execute command "insert"
+      keystroke "@"
+      keystroke fixedText
+      keystroke " = "
     end srhandler
   "replace character": |
-    execute command "normal" of group "MacVim"
+    keystroke "Escape"
     keystroke "r"
-    execute command "Spelling mode"
+    set microphone to spelling
 
 
