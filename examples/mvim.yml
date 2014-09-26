@@ -4,8 +4,8 @@ app:
 keystrokes:
   # Things to be done in insert mode
   cancel: [Escape]
-  normal: [Escape]
-  "normal mode": [Escape]
+  "keystroke normal": [Escape]
+  "keystroke insert": [i]
   quotes: ["\""]
   quote: ["\""]
   brackets: ["["]
@@ -15,26 +15,40 @@ keystrokes:
   "two colons": [":", ":"]
 
   # Motion
-  left: [Escape, "h"]
-  right: [Escape, "l"]
-  "move up": [Escape, "k"]
-  "move down": [Escape, "j"]
+  left: [LeftArrow]
+  right: [RightArrow]
+  up: [UpArrow]
+  down: [DownArrow]
+  "move up": [UpArrow]
+  "move down": [DownArrow]
   top: [Escape, g, g]
   bottom: [Escape, Shift-g]
 
   # things to be done in normal mode
   "remove word": [Escape, d, w]
   "delete line": [Escape, d, d]
+  "delete until": [Escape, d, "/"]
+  "remove trailing spaces": [Escape, "0", "d", "w"]
+
   "delete until end": [Escape, Shift-d]
   open: [Escape, ":", "e", " "]
   save: [Escape, ":", "w", Return]
   quit: [Escape, ":", "q", Return]
   replace: [Escape, ":", "%", "s", "/", "/", "/", "g"]
 
+  # Search
   search: [Escape, "/"]
 
+  #Text manipulation
   capitalize: [Escape, g, c, w]
+  uppercase: [Escape, v, Shift-u]
+  uppercase: [Escape, v, Shift-u]
+  "camel case": [Escape, v, Shift-u]
+
+  # Commands
   execute: [Escape, ":", "!"]
+
+  #Insert mode
   insert: [Escape, i]
   "insert in the beggining": [Escape, Shift-i]
   "new line insert": [Escape, o]
@@ -45,11 +59,12 @@ keystrokes:
   end: [Escape, "$"]
   "end of line": [Escape, "g", "_"]
   undo: [Escape, u]
+  redo: [Escape, Ctrl-r]
   visual: [Escape, v]
-  uppercase: [Escape, v, Shift-u]
   next: [Escape, n]
   repeat: [Escape, "."]
-  yank: [Escape, y]
+  yank: [y]
+  paste: [Escape, p]
   "yank line": [Escape, y, y]
   dup: [Escape, y, y, p]
   "select all surroundings": [Escape, v, i, p]
@@ -64,8 +79,6 @@ keystrokes:
   tree: [Escape, ",", "p"]
   "open tree": [Escape, ",", "p"]
   "close tree": [Escape, ",", "p"]
-  down: [DownArrow]
-  up: [UpArrow]
   modify: [m]
   add: [m, a]
   move: [m, m]
@@ -80,11 +93,22 @@ keystrokes:
   yes: [y]
 
   #macros
-  define: ["Escape", "d", "e", "s"] 
+  #TODO add a tab in the end!
+  define: [Escape, "d", "e", "f"]
 
 texts:
   describe: "desc "
 scripts:
+  "prepare": |
+    set microphone to command operation
+
+  "insert": |
+    execute command "keystroke normal" of group "MacVim"
+    execute command "keystroke insert" of group "MacVim"
+    set microphone to dictation
+  "normal": |
+    execute command "keystroke normal" of group "MacVim"
+    set microphone to command operation
   "constant /!Something!/": |
     on srhandler(vars)
       set scriptPath to "Macintosh HD:Users:jm:p:dragon-custom-commands:_string.scpt"
@@ -130,8 +154,19 @@ scripts:
       keystroke " = "
     end srhandler
   "replace character": |
-    keystroke "Escape"
+    execute command "normal"
     keystroke "r"
     set microphone to spelling
 
+  "go to /!LineNumber!/": |
+    on srhandler(vars)
+      set lineNumber to (varLineNumber of vars)
+      try
+        set lineNumber to lineNumber as number
+        keystroke Escape
+        keystroke ":"
+        keystroke lineNumber
+        keystroke return
+      end try
+    end srhandler
 
