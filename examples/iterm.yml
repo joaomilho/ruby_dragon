@@ -1,0 +1,41 @@
+app:
+  name: com.googlecode.iterm2
+  version: 1
+keystrokes:
+  enter: [Return]
+  end: [Control-e]
+  begin: [Control-a]
+  cancel: [Control-c]
+  quit: [Control-q]
+  "new tab": [Command-t]
+  "super user": [Control-a, "s", "u", "d", "o", Space]
+  #password: ["p", "p", "p", "p", Return]
+  # Motion
+  left: [LeftArrow]
+  right: [RightArrow]
+  up: [UpArrow]
+  down: [DownArrow]
+  "move up": [UpArrow]
+  "move down": [DownArrow]
+
+texts:
+  describe: "desc "
+  password: "pppp\n"
+  list: "ls\n"
+  clear: "clear\n"
+  htop: "htop\n"
+  #Rails stuff
+  rake: "rake "
+  migrate: "rake db:migrate\n"
+  "rails generate migration": "rails g migration "
+  "rails new project": "rails new "
+  "test": "rspec\n"
+  #Git stuff
+  "git add": "git add "
+  "git status": "git status\n"
+  "git commit": "branch=`git rev-parse --abbrev-ref HEAD`; git commit -am \"$branch "
+  "git push": "git push\n"
+  "git new branch": "git checkout -b "
+  "git check out": "git checkout "
+  #TODO improve rails new
+  #rails new myapp -m https://raw.github.com/RailsApps/rails-composer/master/composer.rb
